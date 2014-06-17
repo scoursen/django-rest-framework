@@ -194,8 +194,11 @@ class BaseSerializer(WritableField):
 
         self.context = context or {}
 
-        self.init_data = data
-        self.init_files = files
+        self.init_data, self.init_files = {}, {}
+        for (k, v) in data.lists():
+            self.init_data[k] = v
+        for (k, v) in files.lists():
+            self.init_files[k] = v
         self.object = instance
         self.fields = self.get_fields()
 
